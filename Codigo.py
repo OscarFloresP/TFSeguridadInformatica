@@ -12,36 +12,30 @@ alfabeto = string.ascii_lowercase + string.ascii_lowercase
 num_clave = 10
 
 def cifrar(texto, clave):
-    #Conversión del texto a lista para poder reemplazar letra por letra
-    texto = list(texto.lower())
+    output = ""
+    for letra in texto:
 
-    for i in range(len(texto)):
-        #Validación de espacios
-        if texto[i] == ' ':
-            texto[i] = ' '
-        #Reemplazar el valor actual de la letra según la clave ingresada
+        x = ord(letra)
+
+        if x == ord(" "):
+            output+= " "
         else:
-            texto_output = alfabeto.index(texto[i]) + clave
-            texto[i] = alfabeto[texto_output]
-    #Conversión de lista a string
-    output = ''.join(map(str, texto))
+            output+= chr(x+clave)
+
     return output
 
 
 def descifrar(texto,clave):
-    # Conversión del texto a lista para poder reemplazar letra por letra
-    texto = list(texto.lower())
+    output = ""
+    for letra in texto:
 
-    for i in range(len(texto)):
-        # Validación de espacios
-        if texto[i] == ' ':
-            texto[i] = ' '
-        # Reemplazar el valor actual de la letra según la clave ingresada
+        x = ord(letra)
+
+        if x == ord(" "):
+            output+= " "
         else:
-            texto_output = alfabeto.index(texto[i]) - clave
-            texto[i] = alfabeto[texto_output]
-        #Conversión de lista a string
-    output = ''.join(map(str, texto))
+            output+= chr(x-clave)
+
     return output
 
 
@@ -64,12 +58,23 @@ encry = StringVar()
 encrybox = ttk.Entry(frm, textvariable=encry)
 encrybox.grid(column=0, row=1)
 
+key = StringVar()
+key = ttk.Entry(frm, textvariable=key)
+key.grid(column=0, row=10)
+
 decry = StringVar()
 decrybox = ttk.Entry(frm, textvariable=decry)
 decrybox.grid(row=5, column=0)
 
+def clave():
+    num_clave=key.get()
+    return num_clave
+    
+
 def encriptado():
     try:
+        num_clave=int(key.get())
+        
         texto_input=encry.get()
         texto_cifrado = cifrar(texto_input,num_clave)
         print(texto_cifrado)
@@ -82,6 +87,7 @@ def encriptado():
 
 def desencriptado():
     try:
+        num_clave=int(key.get())
         texto_cifrado=decry.get()
         texto_descifrado = descifrar(texto_cifrado,num_clave)
         print(texto_cifrado)
@@ -106,6 +112,10 @@ encriptBut.configure(command=encriptado)
 desencriptBut=ttk.Button(frm,text="Desencriptar")
 desencriptBut.grid(column=2,row=5)
 desencriptBut.configure(command=desencriptado)
+
+cla=ttk.Button(frm,text="Clave")
+cla.grid(column=2,row=10)
+cla.configure(command=clave)
 
 clean=ttk.Button(frm,text="Limpiar")
 clean.grid(column=0,row=15,pady=10)
