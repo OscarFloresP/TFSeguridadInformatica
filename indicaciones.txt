@@ -1,0 +1,4 @@
+Descargar el repositorio en el boton verde code, download Zip
+-Para usar el ejecutable:
+ Abrir la carpeta dist y darle doble click en TF.exe
+-Para el codigo abrir el archivo codigo.py
